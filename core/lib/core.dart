@@ -7,13 +7,13 @@ import "dart:math";
 // Third Party
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_messaging/firebase_messaging.dart";
-import "package:path_provider/path_provider.dart";
 import "package:flutter/material.dart";
 import "package:flutter_local_notifications/flutter_local_notifications.dart";
 import "package:get_storage/get_storage.dart";
 import "package:http/http.dart" as http;
 import "package:logger/logger.dart";
 import "package:recase/recase.dart";
+import "package:get/get.dart";
 
 // System
 part "design/colors/app_color_model.dart";
@@ -35,8 +35,6 @@ part "utils/keyboard.dart";
 part "utils/str.dart";
 part "utils/toastr.dart";
 part "utils/validator.dart";
-part "widgets/theme_builder.dart";
-part "widgets/watch.dart";
 part "widgets/loading_icon.dart";
 part "widgets/buttons/button.dart";
 part "widgets/buttons/button_icon.dart";
@@ -48,6 +46,5 @@ part "widgets/forms/form_label.dart";
 part "widgets/forms/form_select.dart";
 part "stores/persistent_store.dart";
 part "stores/store.dart";
-part "stores/file_store.dart";
 part "ignitr.dart";
 part "ignitr_config.dart";

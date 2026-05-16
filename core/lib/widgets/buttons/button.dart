@@ -2,7 +2,7 @@ part of "package:core/core.dart";
 
 enum ButtonVariant { primary, secondary, danger, success, info, warning, dark, light }
 
-class Button extends StatefulWidget {
+class Button extends StatelessWidget {
   final String label;
   final void Function(ButtonController)? onTap;
   final bool outline;
@@ -13,8 +13,8 @@ class Button extends StatefulWidget {
   final ButtonVariant variant;
   final EdgeInsets padding;
 
-  const Button({
-    super.key,
+  Button({
+    required Key key,
     required this.label,
     this.onTap,
     this.leading,
@@ -23,9 +23,10 @@ class Button extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
   })  : outline = false,
         block = false,
-        variant = ButtonVariant.primary;
+        variant = ButtonVariant.primary,
+        super(key: key);
 
-  const Button.outline({
+  Button.outline({
     required Key key,
     required this.label,
     this.onTap,
@@ -37,7 +38,8 @@ class Button extends StatefulWidget {
   })  : block = false,
         outline = true,
         super(key: key);
-  const Button.outlineBlock({
+
+  Button.outlineBlock({
     required Key key,
     required this.label,
     this.onTap,
@@ -49,7 +51,8 @@ class Button extends StatefulWidget {
   })  : block = true,
         outline = true,
         super(key: key);
-  const Button.block({
+
+  Button.block({
     required Key key,
     required this.label,
     this.onTap,
@@ -61,7 +64,8 @@ class Button extends StatefulWidget {
   })  : block = true,
         outline = false,
         super(key: key);
-  const Button.primary({
+
+  Button.primary({
     required Key key,
     required this.label,
     this.onTap,
@@ -73,7 +77,8 @@ class Button extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
   })  : variant = ButtonVariant.primary,
         super(key: key);
-  const Button.secondary({
+
+  Button.secondary({
     required Key key,
     required this.label,
     this.onTap,
@@ -85,7 +90,8 @@ class Button extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
   })  : variant = ButtonVariant.secondary,
         super(key: key);
-  const Button.success({
+
+  Button.success({
     required Key key,
     required this.label,
     this.onTap,
@@ -97,7 +103,8 @@ class Button extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
   })  : variant = ButtonVariant.success,
         super(key: key);
-  const Button.danger({
+
+  Button.danger({
     required Key key,
     required this.label,
     this.onTap,
@@ -109,7 +116,8 @@ class Button extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
   })  : variant = ButtonVariant.danger,
         super(key: key);
-  const Button.info({
+
+  Button.info({
     required Key key,
     required this.label,
     this.onTap,
@@ -121,7 +129,8 @@ class Button extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
   })  : variant = ButtonVariant.info,
         super(key: key);
-  const Button.warning({
+
+  Button.warning({
     required Key key,
     required this.label,
     this.onTap,
@@ -133,7 +142,8 @@ class Button extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
   })  : variant = ButtonVariant.warning,
         super(key: key);
-  const Button.dark({
+
+  Button.dark({
     required Key key,
     required this.label,
     this.onTap,
@@ -145,7 +155,8 @@ class Button extends StatefulWidget {
     this.padding = const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
   })  : variant = ButtonVariant.dark,
         super(key: key);
-  const Button.light({
+
+  Button.light({
     required Key key,
     required this.label,
     this.onTap,
@@ -158,28 +169,7 @@ class Button extends StatefulWidget {
   })  : variant = ButtonVariant.light,
         super(key: key);
 
-  @override
-  State<Button> createState() => _ButtonState();
-}
-
-class _ButtonState extends State<Button> {
-  late ButtonController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = ButtonController();
-    controller.addListener(_update);
-  }
-
-  void _update() => setState(() {});
-
-  @override
-  void dispose() {
-    controller.removeListener(_update);
-    controller.dispose();
-    super.dispose();
-  }
+  final ButtonController btnController = ButtonController.instance;
 
   Map<ButtonVariant, Color> _btnColors(BuildContext context) => {
         ButtonVariant.primary: kcAccent,
@@ -194,61 +184,109 @@ class _ButtonState extends State<Button> {
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = _btnColors(context)[widget.variant]!;
-    final textColor = bgColor.computeLuminance() > 0.6 ? kcSlate.shade600 : kcWhite;
+    Color btnBgColor = _btnColors(context)[variant]!;
+    Color btnTxtColor = btnBgColor.computeLuminance() > 0.6 ? kcSlate.shade600 : kcWhite;
 
-    final disabledColor = bgColor.withValues(alpha: 0.5);
-
-    Widget content = controller.isBusy
-        ? widget.loadingIcon ??
-            LoadingIcon(
-              color: !widget.outline ? textColor : bgColor,
-              height: 16,
-              circular: true,
-            )
-        : Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (widget.leading != null) widget.leading!,
-              if (widget.leading != null) SizedBox(width: kSpacer1),
-              Text(
-                widget.label,
-                style: TextStyl.label(context).md.regular?.copyWith(
-                      fontWeight: !widget.outline ? FontWeight.bold : FontWeight.w400,
-                      color: !widget.outline ? textColor : bgColor,
-                    ),
+    return Obx(
+      () => GestureDetector(
+        onTap: () => onTap!(btnController),
+        child: block
+            ? AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                padding: padding,
+                width: double.infinity,
+                alignment: Alignment.center,
+                decoration: !outline
+                    ? BoxDecoration(
+                        color: !btnController.isDisabled ? btnBgColor : btnBgColor.withAlpha(alpha(0.5)),
+                        borderRadius: BorderRadius.circular(!flat ? 8 : 0),
+                      )
+                    : BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(!flat ? 8 : 0),
+                        border: Border.all(
+                          color: !btnController.isDisabled ? btnBgColor : btnBgColor.withAlpha(alpha(0.5)),
+                          width: 1,
+                        ),
+                      ),
+                child: !btnController.isBusy
+                    ? Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          if (leading != null) leading!,
+                          if (leading != null) SizedBox(width: 6),
+                          Text(
+                            label,
+                            style: TextStyl.label(context).md.regular?.copyWith(
+                                  fontWeight: !outline ? FontWeight.bold : FontWeight.w400,
+                                  color: !outline ? btnTxtColor : btnBgColor,
+                                ),
+                          ),
+                        ],
+                      )
+                    : loadingIcon != null
+                        ? SizedBox(height: 20, width: 20, child: loadingIcon)
+                        : LoadingIcon(
+                            color: !outline ? btnTxtColor : btnBgColor,
+                            height: 16,
+                            circular: true,
+                          ),
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 250),
+                    padding: padding,
+                    alignment: Alignment.center,
+                    decoration: !outline
+                        ? BoxDecoration(
+                            color: !btnController.isDisabled ? btnBgColor : btnBgColor.withAlpha(alpha(0.5)),
+                            borderRadius: BorderRadius.circular(!flat ? 8 : 0),
+                            border: Border.all(
+                              color: btnBgColor,
+                              width: 1,
+                            ),
+                          )
+                        : BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(!flat ? 8 : 0),
+                            border: Border.all(
+                              color: btnBgColor,
+                              width: 1,
+                            ),
+                          ),
+                    child: !btnController.isBusy
+                        ? Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              if (leading != null) leading!,
+                              if (leading != null) SizedBox(width: 6),
+                              Text(
+                                label,
+                                style: !outline
+                                    ? TextStyl.label(context).sm.medium?.copyWith(
+                                          color: btnTxtColor,
+                                        )
+                                    : TextStyl.label(context).sm.regular?.copyWith(
+                                          color: btnBgColor,
+                                        ),
+                              ),
+                            ],
+                          )
+                        : loadingIcon != null
+                            ? SizedBox(height: 20, width: 20, child: loadingIcon)
+                            : LoadingIcon(
+                                color: !outline ? btnTxtColor : btnBgColor,
+                                height: 16,
+                              ),
+                  ),
+                ],
               ),
-            ],
-          );
-
-    final container = AnimatedContainer(
-      duration: const Duration(milliseconds: 250),
-      padding: widget.padding,
-      width: widget.block ? double.infinity : null,
-      alignment: Alignment.center,
-      decoration: widget.outline
-          ? BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(widget.flat ? 0 : 8),
-              border: Border.all(
-                color: controller.isDisabled ? disabledColor : bgColor,
-              ),
-            )
-          : BoxDecoration(
-              color: controller.isDisabled ? disabledColor : bgColor,
-              borderRadius: BorderRadius.circular(widget.flat ? 0 : 8),
-            ),
-      child: content,
-    );
-
-    return GestureDetector(
-      onTap: controller.isDisabled ? null : () => widget.onTap?.call(controller),
-      child: widget.block
-          ? container
-          : Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [container],
-            ),
+      ),
     );
   }
 }

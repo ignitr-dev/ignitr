@@ -10,7 +10,9 @@ class AuthLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor ?? AppColors.primarySurface(context),
-      body: body,
+      body: SafeArea(
+        child: body,
+      ),
     );
   }
 }

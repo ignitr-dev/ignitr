@@ -1,25 +1,14 @@
 part of "package:core/core.dart";
 
 abstract class PersistentStore<T> extends Store<T> {
-  PersistentStore(super.initialValue);
-
   String get name;
 
   T fromStorage(dynamic data);
-
   dynamic toStorage(T value);
 
-  @override
-  void onInit() {
-    super.onInit();
-
+  PersistentStore(super.initial) {
     _load();
-
-    addListener(_listener);
-  }
-
-  void _listener() {
-    _save(value);
+    listen(_save);
   }
 
   void _load() {
@@ -39,34 +28,30 @@ abstract class PersistentStore<T> extends Store<T> {
       if (_isNull(val)) {
         Storage.delete(name);
       } else {
-        Storage.put(
-          name,
-          toStorage(val),
-        );
+        Storage.put(name, toStorage(val));
       }
     } catch (e) {
       // Optional: log error
     }
   }
 
-  /// Clear store and reset value
+  /// 🔥 Safe clear (better than setting null manually)
   void clear() {
     Storage.delete(name);
-
-    value = emptyValue;
+    value = _emptyValue();
   }
 
-  /// Override for non-nullable stores
-  T get emptyValue => null as T;
+  /// 👇 Override if T is non-nullable
+  T _emptyValue() {
+    return null as T;
+  }
 
+  /// 👇 Handles nullable generics safely
   bool _isNull(T val) {
-    return val == null;
-  }
-
-  @override
-  void dispose() {
-    removeListener(_listener);
-
-    super.dispose();
+    try {
+      return val == null;
+    } catch (_) {
+      return false;
+    }
   }
 }

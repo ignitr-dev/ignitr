@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
-import "package:flutter/services.dart";
 import "package:ignitr_template/app/modules/splash/splash.dart";
+import "package:ignitr_template/app/shared/shared.dart";
 import "package:ignitr_template/config.dart";
 import "package:get/get.dart";
 
@@ -26,33 +26,22 @@ void main() async {
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
+  App({super.key});
+  final settingStore = SettingStore.instance;
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: isDark ? AppColors.dark.primarySurface : AppColors.light.primarySurface,
-        statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
-        statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
+    return Obx(
+      () => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        defaultTransition: Transition.fadeIn,
+        title: Config.appName,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: settingStore.themeMode,
+        initialRoute: SplashRouter.index,
+        getPages: routes,
       ),
-    );
-
-    return ThemeBuilder(
-      builder: (context, themeMode) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          defaultTransition: Transition.fadeIn,
-          title: Config.appName,
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
-          themeMode: themeMode,
-          initialRoute: SplashRouter.index,
-          getPages: routes,
-        );
-      },
     );
   }
 }

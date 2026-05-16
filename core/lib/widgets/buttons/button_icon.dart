@@ -1,16 +1,18 @@
 part of "package:core/core.dart";
 
-class ButtonIcon extends StatefulWidget {
+class ButtonIcon extends StatelessWidget {
   final Widget icon;
   final Widget? loadingIcon;
   final Color? backgroundColor;
   final Color? color;
   final void Function(ButtonController)? onTap;
   final bool outline;
-  final double radius;
+  final num radius;
 
-  const ButtonIcon({
-    super.key,
+  final btnController = ButtonController.instance;
+
+  ButtonIcon({
+    required Key key,
     required this.icon,
     this.onTap,
     this.outline = false,
@@ -18,78 +20,50 @@ class ButtonIcon extends StatefulWidget {
     this.color,
     this.loadingIcon,
     this.radius = 16,
-  });
-
-  @override
-  State<ButtonIcon> createState() => _ButtonIconState();
-}
-
-class _ButtonIconState extends State<ButtonIcon> {
-  late ButtonController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = ButtonController();
-    controller.addListener(_update);
-  }
-
-  void _update() => setState(() {});
-
-  @override
-  void dispose() {
-    controller.removeListener(_update);
-    controller.dispose();
-    super.dispose();
-  }
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = widget.backgroundColor ?? kcAccent;
-    final iconColor = widget.color ?? (bgColor.computeLuminance() > 0.6 ? kcSlate.shade600 : kcWhite);
-
-    final disabledColor = bgColor.withValues(alpha: 0.5);
-
-    Widget content = controller.isBusy
-        ? widget.loadingIcon ??
-            LoadingIcon(
-              color: !widget.outline ? iconColor : bgColor,
-              height: 16,
-              circular: true,
-            )
-        : IconTheme(
-            data: IconThemeData(color: !widget.outline ? iconColor : bgColor),
-            child: widget.icon,
-          );
-
-    final container = AnimatedContainer(
-      duration: const Duration(milliseconds: 250),
-      padding: const EdgeInsets.all(12),
-      constraints: BoxConstraints(
-        minHeight: widget.radius * 2,
-        minWidth: widget.radius * 2,
-      ),
-      alignment: Alignment.center,
-      decoration: widget.outline
-          ? BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(widget.radius * 2),
-              border: Border.all(
-                color: controller.isDisabled ? disabledColor : bgColor,
-              ),
-            )
-          : BoxDecoration(
-              color: controller.isDisabled ? disabledColor : bgColor,
-              borderRadius: BorderRadius.circular(widget.radius * 2),
+    return Obx(
+      () => GestureDetector(
+        onTap: () {
+          if (!btnController.isBusy && !btnController.isDisabled) {
+            onTap!(btnController);
+          }
+        },
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+              constraints: BoxConstraints(minHeight: radius * 2, minWidth: radius * 2),
+              alignment: Alignment.center,
+              decoration: !outline
+                  ? BoxDecoration(
+                      color: !btnController.isDisabled ? backgroundColor : backgroundColor!.withAlpha(alpha(0.5)),
+                      borderRadius: BorderRadius.circular(radius.toDouble() * 2),
+                    )
+                  : BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(radius.toDouble() * 2),
+                      border: Border.all(
+                        color: !btnController.isDisabled ? getContrastColor(backgroundColor!) : getContrastColor(backgroundColor!).withAlpha(alpha(0.5)),
+                        width: 1,
+                      ),
+                    ),
+              child: !btnController.isBusy
+                  ? icon
+                  : loadingIcon != null
+                      ? SizedBox(height: 20, width: 20, child: loadingIcon)
+                      : LoadingIcon(
+                          color: !outline ? getContrastColor(backgroundColor!) : backgroundColor!,
+                          height: 16,
+                        ),
             ),
-      child: content,
-    );
-
-    return GestureDetector(
-      onTap: controller.isDisabled ? null : () => widget.onTap?.call(controller),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [container],
+          ],
+        ),
       ),
     );
   }

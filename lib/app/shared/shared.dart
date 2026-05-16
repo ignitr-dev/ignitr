@@ -13,5 +13,6 @@ part "views/no_content.dart";
 part "views/errors/error_page.dart";
 part "views/errors/not_found_error_page.dart";
 part "stores/auth_store.dart";
+part "stores/setting_store.dart";
 part "networks/auth_session/auth_session_client.dart";
 part "networks/auth_session/api_auth_session_client.dart";

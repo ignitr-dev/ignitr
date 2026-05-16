@@ -32,8 +32,11 @@ Here are some fantastic features you’ll get by default when scaffolding your p
 
 - **MVC Pattern**: The project follows the `MVC` pattern, which separates logic, UI, and models for better manageability.
 - **Modular Structure**: The modular structure allows developers to reuse modules across different projects, offering greater flexibility and scalability.
-- **Module Generator**: A simple module generator tool has been added, enabling you to generate any module with a single command.
-- **Persistent/Reactive Stores**: It has a layer called Stores, it is a reactive store you can use for reactive data of your application, it also comes with persistent feature so even if your app is closed the stored data will remain.
+- **Module/File Generator**: A simple generator command has been added, enabling you to generate any module or file within a module with a single command.
+- **Stores**: Ignitr comes with build in shared store system, it contains:
+  - **Reactive Store**: This is the shared reactive state that can be be used anywhere within the application, it will be lost when the app is closed.
+  - **Persistent Store**: This is the persistent shared store value it will be persisted even the app is closed and re-launched again, it will only destroy when the app is uninstalled.
+  - **File Store**: Coming Soon
 
 ### Further Documentation
 
