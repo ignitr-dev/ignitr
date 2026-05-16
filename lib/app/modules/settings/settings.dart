@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:ignitr_template/app/shared/shared.dart";
-import "package:ignitr_template/system/system.dart";
+import "package:core/core.dart";
 import "package:get/get.dart";
 
 part "controllers/settings_controller.dart";

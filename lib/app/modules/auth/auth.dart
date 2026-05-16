@@ -2,7 +2,7 @@ import "package:feather_icons/feather_icons.dart";
 import "package:flutter/material.dart";
 import "package:ignitr_template/app/models/models.dart";
 import "package:ignitr_template/app/shared/shared.dart";
-import "package:ignitr_template/system/system.dart";
+import "package:core/core.dart";
 import "package:get/get.dart";
 
 part "controllers/login_controller.dart";

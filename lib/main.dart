@@ -1,25 +1,24 @@
-import "dart:io";
-
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:ignitr_template/app/modules/splash/splash.dart";
 import "package:ignitr_template/config.dart";
 import "package:get/get.dart";
-import "package:get_storage/get_storage.dart";
 
-import "system/system.dart";
+import "package:core/core.dart";
 import "routes/router.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  HttpOverrides.global = AppHttpOverrides();
 
-  await GetStorage.init();
-
-  // Enable below code to allow notifications
-
-  // final notificationService = NotificationService();
-  // notificationService.init();
+  await Ignitr.initialize(
+    notifications: false,
+    firebase: false,
+    ignitrConfig: IgnitrConfig(
+      apiBaseUrl: Config.apiBaseUrl,
+      bodyFontFamily: Config.bodyFontFamily ?? "Inter",
+      headingFontFamily: Config.headingFontFamily ?? "Poppins",
+    ),
+  );
 
   /// Set and lock device Orientation
   // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
