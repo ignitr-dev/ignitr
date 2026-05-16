@@ -6,21 +6,10 @@ class SettingsController extends AppController {
     return Get.find<SettingsController>();
   }
 
-  /// Observables
-  final RxString _selectedTheme = "system".obs;
-
-  /// Getters
-  String get selectedTheme => _selectedTheme.value;
-
-  @override
-  void onInit() {
-    super.onInit();
-    _selectedTheme(Storage.get<String>("theme_mode"));
-  }
+  final settingStore = SettingStore.instance;
 
   /// Theme Switcher
-  void changeTheme(BuildContext context, String themeMode) {
-    _selectedTheme(themeMode);
-    ThemeBuilder.of(context)?.changeThemeTo(_selectedTheme.value);
+  void swithThemeTo(String theme) {
+    settingStore.update((value) => value.copyWith(theme: theme));
   }
 }

@@ -12,7 +12,7 @@ class AuthStore extends PersistentStore<AuthModel?> {
   }
 
   @override
-  String get storageKey => "auth_session";
+  String get name => "auth_session";
 
   @override
   AuthModel? fromStorage(data) => AuthModel.fromJson(data);
