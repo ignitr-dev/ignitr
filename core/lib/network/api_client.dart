@@ -5,7 +5,11 @@ class ApiClient {
 
   final http.Client _client;
 
-  ApiClient({http.Client? client}) : _client = client ?? http.Client();
+  final String? _baseUrl;
+
+  ApiClient({http.Client? client, String? baseUrl})
+      : _baseUrl = baseUrl,
+        _client = client ?? http.Client();
 
   /// GENERIC REQUEST HANDLER
   Future<ApiResponse<T>> _request<T>({
@@ -128,7 +132,14 @@ class ApiClient {
 
   /// HELPERS
   Uri _buildUri(String endpoint, Map<String, dynamic>? query) {
-    final uri = Uri.parse("${Ignitr.config.apiBaseUrl}$endpoint");
+    /// Allows full URLs directly
+    if (endpoint.startsWith("http://") || endpoint.startsWith("https://")) {
+      return Uri.parse(endpoint).replace(
+        queryParameters: query,
+      );
+    }
+
+    final uri = Uri.parse("${_baseUrl ?? Ignitr.config.apiBaseUrl}$endpoint");
     return uri.replace(queryParameters: query);
   }
 
@@ -166,6 +177,18 @@ class ApiClient {
 
     return ApiResponse.withError(
       decoded is Map ? decoded["message"] ?? "Unknown error" : "Error",
+    );
+  }
+
+  ApiClient withBaseUrl(String url) {
+    assert(
+      url.startsWith("http://") || url.startsWith("https://"),
+      "Base URL must start with http:// or https://",
+    );
+
+    return ApiClient(
+      client: _client,
+      baseUrl: url,
     );
   }
 
