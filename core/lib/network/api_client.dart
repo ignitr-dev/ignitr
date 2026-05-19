@@ -30,19 +30,33 @@ class ApiClient {
 
       switch (method) {
         case "GET":
-          response = await _client.get(uri, headers: requestHeaders).timeout(const Duration(seconds: timeout));
+          response = await _client
+              .get(uri, headers: requestHeaders)
+              .timeout(const Duration(seconds: timeout));
           break;
 
         case "POST":
-          response = await _client.post(uri, headers: requestHeaders, body: body != null ? jsonEncode(body) : null).timeout(const Duration(seconds: timeout));
+          response = await _client
+              .post(uri,
+                  headers: requestHeaders,
+                  body: body != null ? jsonEncode(body) : null)
+              .timeout(const Duration(seconds: timeout));
           break;
 
         case "PUT":
-          response = await _client.put(uri, headers: requestHeaders, body: body != null ? jsonEncode(body) : null).timeout(const Duration(seconds: timeout));
+          response = await _client
+              .put(uri,
+                  headers: requestHeaders,
+                  body: body != null ? jsonEncode(body) : null)
+              .timeout(const Duration(seconds: timeout));
           break;
 
         case "DELETE":
-          response = await _client.delete(uri, headers: requestHeaders, body: body != null ? jsonEncode(body) : null).timeout(const Duration(seconds: timeout));
+          response = await _client
+              .delete(uri,
+                  headers: requestHeaders,
+                  body: body != null ? jsonEncode(body) : null)
+              .timeout(const Duration(seconds: timeout));
           break;
 
         default:

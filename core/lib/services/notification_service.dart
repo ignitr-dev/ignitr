@@ -3,7 +3,8 @@ part of "package:core/core.dart";
 class NotificationService {
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
-  final FlutterLocalNotificationsPlugin _localNotifications = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _localNotifications =
+      FlutterLocalNotificationsPlugin();
 
   /// 🔹 Android channel (only used on Android)
   final AndroidNotificationChannel _channel = const AndroidNotificationChannel(
@@ -25,7 +26,8 @@ class NotificationService {
     );
 
     // 3️⃣ Init local notifications
-    const androidSettings = AndroidInitializationSettings("@mipmap/launcher_icon");
+    const androidSettings =
+        AndroidInitializationSettings("@mipmap/launcher_icon");
 
     const iosSettings = DarwinInitializationSettings();
 
@@ -42,7 +44,10 @@ class NotificationService {
     );
 
     // 4️⃣ Create Android notification channel
-    await _localNotifications.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(_channel);
+    await _localNotifications
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(_channel);
 
     // 5️⃣ Foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {

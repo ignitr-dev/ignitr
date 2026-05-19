@@ -30,7 +30,8 @@ class NotFoundErrorPage extends StatelessWidget {
           SizedBox(height: kSpacer),
           Text("Oops!", style: TextStyl.heading(context).sm.semibold),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: kSpacer8).copyWith(top: 8.0),
+            padding: const EdgeInsets.symmetric(horizontal: kSpacer8)
+                .copyWith(top: 8.0),
             child: Text(
               message,
               style: TextStyl.body(context).md.regular,
@@ -40,7 +41,8 @@ class NotFoundErrorPage extends StatelessWidget {
           Spacer(flex: 1),
           action != null
               ? Padding(
-                  padding: EdgeInsets.symmetric(horizontal: kSpacer8).copyWith(bottom: kSpacer8),
+                  padding: EdgeInsets.symmetric(horizontal: kSpacer8)
+                      .copyWith(bottom: kSpacer8),
                   child: TextButton(
                     onPressed: action,
                     style: TextButton.styleFrom(
@@ -50,7 +52,10 @@ class NotFoundErrorPage extends StatelessWidget {
                     ),
                     child: Text(
                       actionLabel,
-                      style: TextStyl.label(context).md.semibold?.copyWith(color: Colors.white),
+                      style: TextStyl.label(context)
+                          .md
+                          .semibold
+                          ?.copyWith(color: Colors.white),
                     ),
                   ),
                 )

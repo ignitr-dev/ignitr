@@ -14,5 +14,6 @@ class ApiResponse<T> {
       : error = null,
         status = ResponseStatus.success;
 
-  ApiResponse.withError(this.error, {this.status = ResponseStatus.error}) : data = null;
+  ApiResponse.withError(this.error, {this.status = ResponseStatus.error})
+      : data = null;
 }

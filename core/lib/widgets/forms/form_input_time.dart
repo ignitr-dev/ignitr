@@ -1,7 +1,8 @@
 part of "package:core/core.dart";
 
 class FormInputTime extends StatelessWidget {
-  const FormInputTime({super.key, this.value, this.onChanged, this.firstDate, this.lastDate});
+  const FormInputTime(
+      {super.key, this.value, this.onChanged, this.firstDate, this.lastDate});
 
   final TimeOfDay? value;
   final TimeOfDay? firstDate;
@@ -26,10 +27,12 @@ class FormInputTime extends StatelessWidget {
         width: double.maxFinite,
         decoration: BoxDecoration(
           color: kcWhite,
-          border: Border.all(color: Colors.black.withAlpha(alpha(0.25)), width: 1.0),
+          border: Border.all(
+              color: Colors.black.withAlpha(alpha(0.25)), width: 1.0),
           borderRadius: BorderRadius.circular(4),
         ),
-        child: Text("${value!.hour < 10 ? "0${value!.hour}" : value!.hour}-${value!.minute}"),
+        child: Text(
+            "${value!.hour < 10 ? "0${value!.hour}" : value!.hour}-${value!.minute}"),
       ),
     );
   }

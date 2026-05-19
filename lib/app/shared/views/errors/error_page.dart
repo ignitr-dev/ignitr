@@ -32,7 +32,8 @@ class ErrorPage extends StatelessWidget {
             SizedBox(height: kSpacer6),
             Text("Oops!", style: TextStyl.heading(context).sm.semibold),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kSpacer8).copyWith(top: kSpacer2),
+              padding: const EdgeInsets.symmetric(horizontal: kSpacer8)
+                  .copyWith(top: kSpacer2),
               child: Text(
                 message,
                 style: TextStyl.body(context).md.regular,

@@ -1,6 +1,15 @@
 part of "package:core/core.dart";
 
-enum ButtonVariant { primary, secondary, danger, success, info, warning, dark, light }
+enum ButtonVariant {
+  primary,
+  secondary,
+  danger,
+  success,
+  info,
+  warning,
+  dark,
+  light
+}
 
 class Button extends StatelessWidget {
   final String label;
@@ -185,7 +194,8 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color btnBgColor = _btnColors(context)[variant]!;
-    Color btnTxtColor = btnBgColor.computeLuminance() > 0.6 ? kcSlate.shade600 : kcWhite;
+    Color btnTxtColor =
+        btnBgColor.computeLuminance() > 0.6 ? kcSlate.shade600 : kcWhite;
 
     return Obx(
       () => GestureDetector(
@@ -198,14 +208,18 @@ class Button extends StatelessWidget {
                 alignment: Alignment.center,
                 decoration: !outline
                     ? BoxDecoration(
-                        color: !btnController.isDisabled ? btnBgColor : btnBgColor.withAlpha(alpha(0.5)),
+                        color: !btnController.isDisabled
+                            ? btnBgColor
+                            : btnBgColor.withAlpha(alpha(0.5)),
                         borderRadius: BorderRadius.circular(!flat ? 8 : 0),
                       )
                     : BoxDecoration(
                         color: Colors.transparent,
                         borderRadius: BorderRadius.circular(!flat ? 8 : 0),
                         border: Border.all(
-                          color: !btnController.isDisabled ? btnBgColor : btnBgColor.withAlpha(alpha(0.5)),
+                          color: !btnController.isDisabled
+                              ? btnBgColor
+                              : btnBgColor.withAlpha(alpha(0.5)),
                           width: 1,
                         ),
                       ),
@@ -219,7 +233,9 @@ class Button extends StatelessWidget {
                           Text(
                             label,
                             style: TextStyl.label(context).md.regular?.copyWith(
-                                  fontWeight: !outline ? FontWeight.bold : FontWeight.w400,
+                                  fontWeight: !outline
+                                      ? FontWeight.bold
+                                      : FontWeight.w400,
                                   color: !outline ? btnTxtColor : btnBgColor,
                                 ),
                           ),
@@ -243,7 +259,9 @@ class Button extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: !outline
                         ? BoxDecoration(
-                            color: !btnController.isDisabled ? btnBgColor : btnBgColor.withAlpha(alpha(0.5)),
+                            color: !btnController.isDisabled
+                                ? btnBgColor
+                                : btnBgColor.withAlpha(alpha(0.5)),
                             borderRadius: BorderRadius.circular(!flat ? 8 : 0),
                             border: Border.all(
                               color: btnBgColor,
@@ -268,17 +286,24 @@ class Button extends StatelessWidget {
                               Text(
                                 label,
                                 style: !outline
-                                    ? TextStyl.label(context).sm.medium?.copyWith(
+                                    ? TextStyl.label(context)
+                                        .sm
+                                        .medium
+                                        ?.copyWith(
                                           color: btnTxtColor,
                                         )
-                                    : TextStyl.label(context).sm.regular?.copyWith(
+                                    : TextStyl.label(context)
+                                        .sm
+                                        .regular
+                                        ?.copyWith(
                                           color: btnBgColor,
                                         ),
                               ),
                             ],
                           )
                         : loadingIcon != null
-                            ? SizedBox(height: 20, width: 20, child: loadingIcon)
+                            ? SizedBox(
+                                height: 20, width: 20, child: loadingIcon)
                             : LoadingIcon(
                                 color: !outline ? btnTxtColor : btnBgColor,
                                 height: 16,

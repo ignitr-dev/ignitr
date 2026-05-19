@@ -1,85 +1,172 @@
 part of "package:core/core.dart";
 
 class Validator {
-  final Map<String, String> errors = {};
   final String field;
   final String value;
 
+  late final String trimmed = value.trim();
+  late final String _fieldLabel = Str.of(field).ucFirst();
+
+  String? _error;
+
   Validator(this.field, this.value);
 
+  bool get hasError => _error != null;
+
   void _addError(String message) {
-    errors[field] = message;
+    _error ??= message;
   }
 
-  Validator required() {
-    if (value.trim().isEmpty) {
-      _addError("${Str.of(field).ucFirst()} is required");
+  Validator required({String? message}) {
+    if (hasError) return this;
+
+    if (trimmed.isEmpty) {
+      _addError(message ?? "$_fieldLabel is required");
     }
+
     return this;
   }
 
-  Validator email() {
-    final emailRegex = RegExp(
-      r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
+  Validator email({String? message}) {
+    if (hasError || trimmed.isEmpty) return this;
+
+    if (!trimmed.isEmail) {
+      _addError(
+        message ?? "$_fieldLabel needs to be a valid email!",
+      );
+    }
+
+    return this;
+  }
+
+  Validator number({String? message}) {
+    if (hasError || trimmed.isEmpty) return this;
+
+    if (double.tryParse(trimmed) == null) {
+      _addError(
+        message ?? "$_fieldLabel needs to be a number!",
+      );
+    }
+
+    return this;
+  }
+
+  Validator min(int minLength, {String? message}) {
+    if (hasError || trimmed.isEmpty) return this;
+
+    if (trimmed.length < minLength) {
+      _addError(
+        message ?? "$_fieldLabel must be at least $minLength characters!",
+      );
+    }
+
+    return this;
+  }
+
+  Validator max(int maxLength, {String? message}) {
+    if (hasError || trimmed.isEmpty) return this;
+
+    if (trimmed.length > maxLength) {
+      _addError(
+        message ?? "$_fieldLabel must be at most $maxLength characters!",
+      );
+    }
+
+    return this;
+  }
+
+  Validator between(
+    int minLength,
+    int maxLength, {
+    String? message,
+  }) {
+    if (hasError || trimmed.isEmpty) return this;
+
+    if (trimmed.length < minLength || trimmed.length > maxLength) {
+      _addError(
+        message ??
+            "$_fieldLabel must be between "
+                "$minLength and $maxLength characters!",
+      );
+    }
+
+    return this;
+  }
+
+  Validator isEqual(
+    String otherValue,
+    String otherField, {
+    String? message,
+  }) {
+    if (hasError) return this;
+
+    if (trimmed != otherValue.trim()) {
+      _addError(
+        message ??
+            "${Str.of(otherField).ucFirst()} and "
+                "$_fieldLabel don't match!",
+      );
+    }
+
+    return this;
+  }
+
+  Validator regex(
+    RegExp pattern, {
+    required String message,
+  }) {
+    if (hasError || trimmed.isEmpty) return this;
+
+    if (!pattern.hasMatch(trimmed)) {
+      _addError(message);
+    }
+
+    return this;
+  }
+
+  Validator noSpecialChars({String? message}) {
+    if (hasError || trimmed.isEmpty) return this;
+
+    final regex = RegExp(
+      r'[!@#$%^&*(),.?":{}|<>\[\]\\/\-_+=~`]',
     );
 
-    if (!emailRegex.hasMatch(value)) {
-      _addError("${Str.of(field).ucFirst()} needs to be a valid email!");
-    }
-    return this;
-  }
-
-  Validator isEqual(dynamic val, String fieldMatchWith) {
-    if (value != val) {
+    if (regex.hasMatch(trimmed)) {
       _addError(
-        "${Str.of(fieldMatchWith).ucFirst()} and ${Str.of(field).ucFirst()} don't match!",
+        message ?? "$_fieldLabel must not contain special characters!",
       );
     }
+
     return this;
   }
 
-  Validator number() {
-    if (value.isNotEmpty && double.tryParse(value) == null) {
-      _addError("${Str.of(field).ucFirst()} needs to be a number!");
-    }
-    return this;
-  }
+  Validator alpha({String? message}) {
+    if (hasError || trimmed.isEmpty) return this;
 
-  Validator min(int minLength) {
-    if (value.length < minLength) {
-      _addError("${Str.of(field).ucFirst()} must be at least $minLength characters!");
-    }
-    return this;
-  }
+    final regex = RegExp(r"^[a-zA-Z]+$");
 
-  Validator max(int maxLength) {
-    if (value.length > maxLength) {
-      _addError("${Str.of(field).ucFirst()} must be at most $maxLength characters!");
-    }
-    return this;
-  }
-
-  Validator between(int minLength, int maxLength) {
-    if (value.length < minLength || value.length > maxLength) {
+    if (!regex.hasMatch(trimmed)) {
       _addError(
-        "${Str.of(field).ucFirst()} must be between $minLength and $maxLength characters!",
+        message ?? "$_fieldLabel may only contain letters!",
       );
     }
+
     return this;
   }
 
-  Validator specialCharacter({String? allowed}) {
-    final regex = RegExp(r"[\s\-$&+,:;=?@#|<>\.^*()%!\\]");
+  Validator alphaNumeric({String? message}) {
+    if (hasError || trimmed.isEmpty) return this;
 
-    if (regex.hasMatch(value)) {
+    final regex = RegExp(r"^[a-zA-Z0-9]+$");
+
+    if (!regex.hasMatch(trimmed)) {
       _addError(
-        "${Str.of(field).ucFirst()} must not contain special characters!",
+        message ?? "$_fieldLabel may only contain letters and numbers!",
       );
     }
+
     return this;
   }
 
-  String? validate() {
-    return errors[field];
-  }
+  String? validate() => _error;
 }

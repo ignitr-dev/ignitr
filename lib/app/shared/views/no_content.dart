@@ -42,7 +42,8 @@ class NoContent extends StatelessWidget {
                 style: TextStyl.heading(context).md.semibold,
               ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kSpacer8).copyWith(top: kSpacer2),
+              padding: const EdgeInsets.symmetric(horizontal: kSpacer8)
+                  .copyWith(top: kSpacer2),
               child: Text(
                 message,
                 style: TextStyl.body(context).md.regular,

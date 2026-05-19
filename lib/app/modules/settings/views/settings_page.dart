@@ -30,7 +30,11 @@ class SettingsPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: settingStore.themeIsSystem ? AppColors.accent(context) : Colors.transparent, width: 2),
+                          border: Border.all(
+                              color: settingStore.themeIsSystem
+                                  ? AppColors.accent(context)
+                                  : Colors.transparent,
+                              width: 2),
                         ),
                         child: Column(
                           children: [
@@ -54,7 +58,11 @@ class SettingsPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: settingStore.themeIsLight ? AppColors.accent(context) : Colors.transparent, width: 2),
+                          border: Border.all(
+                              color: settingStore.themeIsLight
+                                  ? AppColors.accent(context)
+                                  : Colors.transparent,
+                              width: 2),
                         ),
                         child: Column(
                           children: [
@@ -78,7 +86,11 @@ class SettingsPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: settingStore.themeIsDark ? AppColors.accent(context) : Colors.transparent, width: 2),
+                          border: Border.all(
+                              color: settingStore.themeIsDark
+                                  ? AppColors.accent(context)
+                                  : Colors.transparent,
+                              width: 2),
                         ),
                         child: Column(
                           children: [
@@ -109,7 +121,8 @@ class SettingsPage extends StatelessWidget {
                     color: AppColors.secondarySurface(context),
                     borderRadius: BorderRadius.circular(kSpacer2),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: kSpacer3, horizontal: kSpacer),
+                  padding: EdgeInsets.symmetric(
+                      vertical: kSpacer3, horizontal: kSpacer),
                   child: Text(
                     "Logout",
                     style: TextStyl.label(context).md.regular,

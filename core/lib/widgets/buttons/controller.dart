@@ -2,7 +2,8 @@ part of "package:core/core.dart";
 
 class ButtonController extends GetxController {
   static ButtonController get instance {
-    if (!Get.isRegistered<ButtonController>()) Get.create(() => ButtonController());
+    if (!Get.isRegistered<ButtonController>())
+      Get.create(() => ButtonController());
     return Get.find<ButtonController>();
   }
 

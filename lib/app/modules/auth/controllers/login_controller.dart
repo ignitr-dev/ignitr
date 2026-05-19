@@ -35,7 +35,9 @@ class LoginController extends AppController {
       }
 
       /// Update Auth State
-      _auth.value = AuthModel(token: response.data["token"], user: UserModel.fromJson(response.data["user"]));
+      _auth.value = AuthModel(
+          token: response.data["token"],
+          user: UserModel.fromJson(response.data["user"]));
 
       /// Redirect user
       Get.offAllNamed("/dashboard");

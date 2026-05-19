@@ -1,7 +1,8 @@
 part of "package:core/core.dart";
 
 class FormInputDate extends StatelessWidget {
-  const FormInputDate({super.key, this.value, this.onChanged, this.firstDate, this.lastDate});
+  const FormInputDate(
+      {super.key, this.value, this.onChanged, this.firstDate, this.lastDate});
 
   final DateTime? value;
   final DateTime? firstDate;
@@ -24,10 +25,12 @@ class FormInputDate extends StatelessWidget {
         width: double.maxFinite,
         decoration: BoxDecoration(
           color: kcWhite,
-          border: Border.all(color: Colors.black.withAlpha(alpha(0.25)), width: 1.0),
+          border: Border.all(
+              color: Colors.black.withAlpha(alpha(0.25)), width: 1.0),
           borderRadius: BorderRadius.circular(4),
         ),
-        child: Text("${value!.year}-${value!.month < 10 ? "0${value!.month}" : value!.month}-${value!.day}"),
+        child: Text(
+            "${value!.year}-${value!.month < 10 ? "0${value!.month}" : value!.month}-${value!.day}"),
       ),
     );
   }

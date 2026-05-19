@@ -5,7 +5,8 @@ class LoadingIcon extends StatelessWidget {
   final Color? color;
   final bool circular;
 
-  const LoadingIcon({super.key, this.height, this.color, this.circular = false});
+  const LoadingIcon(
+      {super.key, this.height, this.color, this.circular = false});
 
   @override
   Widget build(BuildContext context) {
