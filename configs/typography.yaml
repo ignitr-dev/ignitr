@@ -1,0 +1,44 @@
+# This file defines DesignSystem for typography
+
+weights:
+  regular: w400
+  medium: w500
+  semibold: w700
+  bold: w800
+
+styles:
+  heading:
+    base: displayMedium
+    sizes:
+      xs: { fontSize: 18, height: 1.33 }
+      sm: { fontSize: 24, height: 1.33 }
+      md: { fontSize: 32, height: 1.25 }
+      lg: { fontSize: 36, height: 1.33 }
+      xl: { fontSize: 44, height: 1.27 }
+
+  body:
+    base: bodyMedium
+    sizes:
+      xs: { fontSize: 12, height: 1.33 }
+      sm: { fontSize: 14, height: 1.28 }
+      md: { fontSize: 16, height: 1.5 }
+      lg: { fontSize: 18, height: 1.55 }
+      xl: { fontSize: 24, height: 1.33 }
+
+  caption:
+    base: labelMedium
+    sizes:
+      xs: { fontSize: 10, height: 1.4 }
+      sm: { fontSize: 12, height: 1.33 }
+      md: { fontSize: 14, height: 1.28 }
+      lg: { fontSize: 18, height: 1.33 }
+      xl: { fontSize: 20, height: 1.4 }
+
+  label:
+    base: labelMedium
+    sizes:
+      xs: { fontSize: 10, height: 1.4 }
+      sm: { fontSize: 12, height: 1.33 }
+      md: { fontSize: 14, height: 1.28 }
+      lg: { fontSize: 18, height: 1.33 }
+      xl: { fontSize: 20, height: 1.4 }
