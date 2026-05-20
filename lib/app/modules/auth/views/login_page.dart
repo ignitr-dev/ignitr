@@ -28,15 +28,13 @@ class LoginPage extends StatelessWidget {
                       SizedBox(height: 60),
                       Image.asset(
                         "assets/images/logo.png",
-                        // image('logo.png'),
+                        // assetImage('logo.png'),
                         width: 75,
                       ),
                       const SizedBox(height: kSpacer),
-                      Text("Welcome Back,",
-                          style: TextStyl.heading(context).md.semibold),
+                      Text("Welcome Back,", style: TextStyl.heading(context).md.semibold),
                       const SizedBox(height: kSpacer1),
-                      Text("Sign in to continue",
-                          style: TextStyl.body(context).md.regular),
+                      Text("Sign in to continue", style: TextStyl.body(context).md.regular),
                     ],
                   ),
                   Form(
@@ -48,18 +46,14 @@ class LoginPage extends StatelessWidget {
                           controller: controller.identifierInput,
                           placeholder: "Username / Email / Phone",
                           leading: Icon(FeatherIcons.user),
-                          validator: (value) => Validator("identifier", value!)
-                              .required()
-                              .validate(),
+                          validator: (value) => Validator("identifier", value!).required().validate(),
                         ),
                         SizedBox(height: 25),
                         FormInput.password(
                           controller: controller.passwordInput,
                           placeholder: "Password",
                           leading: Icon(Icons.lock_outline),
-                          validator: (value) => Validator("password", value!)
-                              .required()
-                              .validate(),
+                          validator: (value) => Validator("password", value!).required().validate(),
                           action: TextInputAction.done,
                         ),
                         SizedBox(height: 25),

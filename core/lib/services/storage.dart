@@ -8,12 +8,7 @@ class Storage {
     T value, {
     Map<String, dynamic> Function(T value)? toJson,
   }) async {
-    if (value is String ||
-        value is int ||
-        value is double ||
-        value is bool ||
-        value is List ||
-        value is Map) {
+    if (value is String || value is int || value is double || value is bool || value is List || value is Map) {
       await _box.write(key, value);
     } else {
       if (toJson == null) {
@@ -33,12 +28,7 @@ class Storage {
 
     if (data == null) return null;
 
-    if (T == String ||
-        T == int ||
-        T == double ||
-        T == bool ||
-        T == List ||
-        T == Map) {
+    if (T == String || T == int || T == double || T == bool || T == List || T == Map) {
       return data as T;
     }
 

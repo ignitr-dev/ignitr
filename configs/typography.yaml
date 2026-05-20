@@ -1,4 +1,10 @@
+# --------------------------------------------------
 # This file defines DesignSystem for typography
+# --------------------------------------------------
+
+# Font Weights
+# Keys can be any [String] but
+# Value only accepts any of or in between: w100...w900
 
 weights:
   regular: w400
@@ -6,6 +12,20 @@ weights:
   semibold: w700
   bold: w800
 
+# Text Styles
+#
+# These are the main styles for your text's design theme
+# styles defined here will be exposed as the method of [TextStyle] class
+#
+# [base]: This is the base styling from the Flutter's Theme.of(context).textTheme
+# It will be used as the base styling then other styles will be overridden using sizes and weights
+#
+# [sizes]: Keys can be anything like (xs, xxs, 3xl etc.), but value of these
+#          keys should include both [FontSize] and [height].
+#
+# Example:
+# TextStyle.heading(context)....
+# TextStyle.body(context)....
 styles:
   heading:
     base: displayMedium

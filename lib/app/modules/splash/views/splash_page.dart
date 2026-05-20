@@ -8,9 +8,8 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size screen = Get.size;
     return Scaffold(
-      backgroundColor: kcWhite,
-      body: Container(
-        color: kcWhite,
+      backgroundColor: AppColors.primarySurface(context),
+      body: SizedBox(
         height: screen.height,
         width: double.infinity,
         child: Column(
@@ -19,16 +18,15 @@ class SplashPage extends StatelessWidget {
           children: [
             Spacer(),
             Image.asset(
-              image("logo.png"),
+              assetImage("logo.png"),
               width: screen.width * 0.5,
               fit: BoxFit.cover,
               filterQuality: FilterQuality.high,
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
-              padding: const EdgeInsets.only(bottom: 32.0),
-              child: LoadingIcon(
-                  height: kSpacer, color: AppColors.accent(context)),
+              padding: const EdgeInsets.only(bottom: kSpacer8),
+              child: LoadingIcon(height: kSpacer, color: AppColors.accent(context)),
             ),
           ],
         ),

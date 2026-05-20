@@ -3,7 +3,10 @@ part of "../{SNAKE_MODULE}.dart";
 class {CONTROLLER_CLASS} extends AppController {
   /// Create and get the instance of the controller
   static {CONTROLLER_CLASS} get instance {
-    if (!Get.isRegistered<{CONTROLLER_CLASS}>()) Get.put({CONTROLLER_CLASS}());
+    if (!Get.isRegistered<{CONTROLLER_CLASS}>()) {
+      Get.put({CONTROLLER_CLASS}());
+    }
+    
     return Get.find<{CONTROLLER_CLASS}>();
   }
 

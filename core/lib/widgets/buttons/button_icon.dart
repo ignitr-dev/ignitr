@@ -19,7 +19,7 @@ class ButtonIcon extends StatelessWidget {
     this.backgroundColor = kcAccent,
     this.color,
     this.loadingIcon,
-    this.radius = 16,
+    this.radius = kSpacer,
   }) : super(key: key);
 
   @override
@@ -37,39 +37,29 @@ class ButtonIcon extends StatelessWidget {
           children: [
             AnimatedContainer(
               duration: const Duration(milliseconds: 250),
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-              constraints:
-                  BoxConstraints(minHeight: radius * 2, minWidth: radius * 2),
+              padding: EdgeInsets.all(kSpacer3),
+              constraints: BoxConstraints(minHeight: radius * 2, minWidth: radius * 2),
               alignment: Alignment.center,
               decoration: !outline
                   ? BoxDecoration(
-                      color: !btnController.isDisabled
-                          ? backgroundColor
-                          : backgroundColor!.withAlpha(alpha(0.5)),
-                      borderRadius:
-                          BorderRadius.circular(radius.toDouble() * 2),
+                      color: !btnController.isDisabled ? backgroundColor : backgroundColor!.withAlpha(alpha(0.5)),
+                      borderRadius: BorderRadius.circular(radius.toDouble() * 2),
                     )
                   : BoxDecoration(
                       color: Colors.transparent,
-                      borderRadius:
-                          BorderRadius.circular(radius.toDouble() * 2),
+                      borderRadius: BorderRadius.circular(radius.toDouble() * 2),
                       border: Border.all(
-                        color: !btnController.isDisabled
-                            ? getContrastColor(backgroundColor!)
-                            : getContrastColor(backgroundColor!)
-                                .withAlpha(alpha(0.5)),
+                        color: !btnController.isDisabled ? getContrastColor(backgroundColor!) : getContrastColor(backgroundColor!).withAlpha(alpha(0.5)),
                         width: 1,
                       ),
                     ),
               child: !btnController.isBusy
                   ? icon
                   : loadingIcon != null
-                      ? SizedBox(height: 20, width: 20, child: loadingIcon)
+                      ? SizedBox(height: kSpacer5, width: kSpacer5, child: loadingIcon)
                       : LoadingIcon(
-                          color: !outline
-                              ? getContrastColor(backgroundColor!)
-                              : backgroundColor!,
-                          height: 16,
+                          color: !outline ? getContrastColor(backgroundColor!) : backgroundColor!,
+                          height: kSpacer,
                         ),
             ),
           ],

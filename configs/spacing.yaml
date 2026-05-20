@@ -1,4 +1,14 @@
+# --------------------------------------------------
 # This file defines DesignSystem for spacings
+# --------------------------------------------------
+#
+# Spacing uses [grid-4 with base 16] values,
+# every next value should be devisible by 4
+# Eg: 2, 4, 8, 12, 16, 20, 24.....
+# --------------------------------------------------
+
+# Base size for the spacing and size system
+# all of the other size at scale will be based on this value
 
 base: 16
 

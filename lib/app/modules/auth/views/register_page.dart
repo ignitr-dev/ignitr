@@ -26,15 +26,13 @@ class RegisterPage extends StatelessWidget {
                   children: [
                     SizedBox(height: 60),
                     Image.asset(
-                      image("logo.png"),
+                      assetImage("logo.png"),
                       width: 75,
                     ),
                     SizedBox(height: 15),
-                    Text("Welcome,",
-                        style: TextStyl.heading(context).md.semibold),
+                    Text("Welcome,", style: TextStyl.heading(context).md.semibold),
                     SizedBox(height: 5),
-                    Text("Create an account to continue.",
-                        style: TextStyl.body(context).md.regular),
+                    Text("Create an account to continue.", style: TextStyl.body(context).md.regular),
                   ],
                 ),
                 Form(
@@ -46,9 +44,7 @@ class RegisterPage extends StatelessWidget {
                         controller: controller.firstNameInput,
                         placeholder: "First Name",
                         leading: Icon(Icons.person_outline),
-                        validator: (value) => Validator("First name", value!)
-                            .required()
-                            .validate(),
+                        validator: (value) => Validator("First name", value!).required().validate(),
                         action: TextInputAction.next,
                       ),
                       SizedBox(height: 25),
@@ -56,9 +52,7 @@ class RegisterPage extends StatelessWidget {
                         controller: controller.lastNameInput,
                         placeholder: "Last Name",
                         leading: Icon(Icons.person_outline),
-                        validator: (value) => Validator("Last name", value!)
-                            .required()
-                            .validate(),
+                        validator: (value) => Validator("Last name", value!).required().validate(),
                         action: TextInputAction.next,
                       ),
                       SizedBox(height: 25),
@@ -66,8 +60,7 @@ class RegisterPage extends StatelessWidget {
                         controller: controller.usernameInput,
                         placeholder: "Username",
                         leading: Icon(Icons.alternate_email_outlined),
-                        validator: (value) =>
-                            Validator("Username", value!).required().validate(),
+                        validator: (value) => Validator("Username", value!).required().validate(),
                         action: TextInputAction.next,
                       ),
                       SizedBox(height: 25),
@@ -75,10 +68,7 @@ class RegisterPage extends StatelessWidget {
                         controller: controller.emailInput,
                         placeholder: "Email",
                         leading: Icon(Icons.email_outlined),
-                        validator: (value) => Validator("Email", value!)
-                            .required()
-                            .email()
-                            .validate(),
+                        validator: (value) => Validator("Email", value!).required().email().validate(),
                         action: TextInputAction.next,
                       ),
                       SizedBox(height: 25),
@@ -86,8 +76,7 @@ class RegisterPage extends StatelessWidget {
                         controller: controller.passwordInput,
                         placeholder: "Password",
                         leading: Icon(Icons.lock_outline),
-                        validator: (value) =>
-                            Validator("Password", value!).required().validate(),
+                        validator: (value) => Validator("Password", value!).required().validate(),
                         action: TextInputAction.done,
                       ),
                       SizedBox(height: 25),

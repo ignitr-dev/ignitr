@@ -13,10 +13,10 @@ abstract class PersistentStore<T> extends Store<T> {
 
   void _load() {
     try {
-      final stored = Storage.get(name);
+      final stored = Storage.get<T?>(name, fromJson: fromStorage);
 
       if (stored != null) {
-        value = fromStorage(stored);
+        value = stored;
       }
     } catch (e) {
       Storage.delete(name);
